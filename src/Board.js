@@ -150,12 +150,36 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      console.log(majorDiagonalColumnIndexAtFirstRow);
+      var count = 0;
+      //iterate through each row using for loop and this attribute
+      for (let i = 0; i < this.attributes.n; i++) {
+        var rowI = this.attributes[i];
+        if ((rowI[majorDiagonalColumnIndexAtFirstRow]) === 1) {
+          count ++;
+        }
+        majorDiagonalColumnIndexAtFirstRow++
+      //check if that row at columindex += 1 contains a piece
+        if (count > 1) {
+          return true;
+        }
+      }
+      // has a 1 ? count ++ : dont increment count
+      // while in the loop check if count becomes more than 1 if yes ? return true : return false
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      // var firstRowLength = this.attributes.n;
+      for (let i = 0; i < this.attributes.n; i++) {
+        // if ((firstRow[i] === 1) && (this.hasMajorDiagonalConflictAt(i)
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+        if (this.hasMajorDiagonalConflictAt(i * -1)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
@@ -166,11 +190,28 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      var count = 0;
+      for (let i = 0; i < this.attributes.n; i++) {
+        var rowI = this.attributes[i];
+        if ((rowI[minorDiagonalColumnIndexAtFirstRow]) === 1) {
+          count ++;
+        }
+        minorDiagonalColumnIndexAtFirstRow--;
+        if (count > 1) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      for (let i = 0; i < (this.attributes.n)*2; i++) {
+
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     }
 
@@ -188,3 +229,7 @@
   };
 
 }());
+
+var board = new Board([[1,0,1,0], [0, 1, 0, 1], [1, 0, 0, 0], [0, 1, 0, 0]]);
+board.hasMajorDiagonalConflictAt(0);
+board.hasAnyMajorDiagonalConflicts();
